@@ -2,16 +2,16 @@ export type Episodes = {
   id: string
   title: string
   members: string
-  published_at: string
+  piblishedAt: string
   thumbnail: string
   description: string
-  file: {
-    url: string
-    type: string
-    duration: number
-  }
+  url: string
+  type: string
+  duration: number
+  durationAsString: string
 }
 
 export type HomeProps = {
-  episodes: Episodes[];
+  latestEpisodes: Episodes[];
+  allEpisodes: Episodes[];
 }
