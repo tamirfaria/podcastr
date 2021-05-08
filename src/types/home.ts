@@ -2,7 +2,7 @@ export type Episodes = {
   id: string
   title: string
   members: string
-  piblishedAt: string
+  publishedAt: string
   thumbnail: string
   description: string
   url: string
