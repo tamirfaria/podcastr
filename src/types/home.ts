@@ -4,7 +4,7 @@ export type Episodes = {
   members: string
   publishedAt: string
   thumbnail: string
-  description: string
+  description?: string
   url: string
   type: string
   duration: number
