@@ -13,4 +13,9 @@ export type PlayerContextData = {
   playEpisode: (episode: Episode) => void
   tooglePlay: () => void
   setPlayingState: (state: boolean) => void
+  playList: (list: Episode[], index: number) => void
+  playNext: () => void
+  playPrevious: () => void
+  hasNext: boolean
+  hasPrevious: boolean
 }

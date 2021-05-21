@@ -13,6 +13,28 @@ const PlayerContextProvider: React.FC = ({ children }) => {
     setIsPlaying(true)
   }
 
+  const playList = (list: Episode[], index: number) => {
+    setEpisodeList(list)
+    setCurrentEpisodeIndex(index)
+    setIsPlaying(true)
+  }
+
+  const hasNext = (currentEpisodeIndex + 1) < episodeList.length
+
+  const playNext = () => {
+    if (hasNext) {
+      setCurrentEpisodeIndex(currentEpisodeIndex + 1)
+    }
+  }
+
+  const hasPrevious = currentEpisodeIndex > 0
+
+  const playPrevious = () => {
+    if (hasPrevious) {
+      setCurrentEpisodeIndex(currentEpisodeIndex - 1)
+    }
+  }
+
   const tooglePlay = () => {
     setIsPlaying(!isPlaying)
   }
@@ -26,10 +48,15 @@ const PlayerContextProvider: React.FC = ({ children }) => {
       value={{
         episodeList,
         currentEpisodeIndex,
+        hasPrevious,
+        hasNext,
         playEpisode,
+        playNext,
+        playPrevious,
         isPlaying,
         tooglePlay,
-        setPlayingState
+        setPlayingState,
+        playList
       }}
     >
       {children}

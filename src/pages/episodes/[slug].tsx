@@ -3,31 +3,14 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image'
 import Link from 'next/link'
-import { useContext } from 'react';
-import { PlayerContext } from '../../contexts/PlayerContext';
+import { usePlayer } from '../../contexts/PlayerContext';
 import { api } from '../../service/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
+import { EpisodeProps } from '../../types'
 import styles from './episode.module.scss'
 
-type Episode = {
-  id: string
-  title: string
-  members: string
-  publishedAt: string
-  thumbnail: string
-  description: string
-  url: string
-  type: string
-  duration: number
-  durationAsString: string
-}
-
-type EpisodeProps = {
-  episode: Episode;
-}
-
 export default function Episode({ episode }: EpisodeProps) {
-  const { playEpisode } = useContext(PlayerContext)
+  const { playEpisode } = usePlayer()
   return (
     <div className={styles.episodes}>
       <div className={styles.thumbnailContainer}>
@@ -78,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
   })
-  
+
   return {
     paths,
     fallback: 'blocking'
