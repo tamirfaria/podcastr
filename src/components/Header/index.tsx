@@ -4,7 +4,6 @@ import { format } from 'date-fns'
 
 const Header = () => {  
   const currentDate = format(new Date(), 'EEEEEE, d MMMM', {locale: ptBR})
-
   return (
     <header className={styles.container}>
       <img src="/logo.svg" alt="Logo da Podcastr"/>

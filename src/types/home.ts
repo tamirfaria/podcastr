@@ -1,4 +1,4 @@
-export type Episodes = {
+type Episodes = {
   id: string
   title: string
   members: string
