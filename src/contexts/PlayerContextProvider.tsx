@@ -6,11 +6,34 @@ const PlayerContextProvider: React.FC = ({ children }) => {
   const [episodeList, setEpisodeList] = useState([])
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isLooping, setIsLooping] = useState(false)
+  const [isShuffling, setIsShuffling] = useState(false)
 
   const playEpisode = (episode: Episode) => {
     setEpisodeList([episode])
     setCurrentEpisodeIndex(0)
     setIsPlaying(true)
+  }
+
+  const tooglePlay = () => {
+    setIsPlaying(!isPlaying)
+  }
+
+  const toogleLoop = () => {
+    setIsLooping(!isLooping)
+  }
+
+  const toogleShuffle = () => {
+    setIsShuffling(!isShuffling)
+  }
+
+  const setPlayingState = (state: boolean) => {
+    setIsPlaying(state)
+  }
+
+  const clearPlayerState = () => {
+    setEpisodeList([])
+    setCurrentEpisodeIndex(0)
   }
 
   const playList = (list: Episode[], index: number) => {
@@ -19,29 +42,28 @@ const PlayerContextProvider: React.FC = ({ children }) => {
     setIsPlaying(true)
   }
 
-  const hasNext = (currentEpisodeIndex + 1) < episodeList.length
+  const hasNext = isShuffling || (currentEpisodeIndex + 1) < episodeList.length
 
   const playNext = () => {
-    if (hasNext) {
+    if (isShuffling) {
+      const nextRandomEpisodeIndex = Math.floor(Math.random() * episodeList.length)
+      setCurrentEpisodeIndex(nextRandomEpisodeIndex)
+    } else if (hasNext) {
       setCurrentEpisodeIndex(currentEpisodeIndex + 1)
     }
   }
 
-  const hasPrevious = currentEpisodeIndex > 0
+  const hasPrevious = isShuffling || currentEpisodeIndex > 0
 
   const playPrevious = () => {
-    if (hasPrevious) {
+    if(isShuffling) {
+      const previousRandomEpisodeIndex = Math.floor(Math.random() * episodeList.length)
+      setCurrentEpisodeIndex(previousRandomEpisodeIndex)
+    } else if (hasPrevious) {
       setCurrentEpisodeIndex(currentEpisodeIndex - 1)
     }
   }
 
-  const tooglePlay = () => {
-    setIsPlaying(!isPlaying)
-  }
-
-  const setPlayingState = (state: boolean) => {
-    setIsPlaying(state)
-  }
 
   return (
     <PlayerContext.Provider
@@ -50,13 +72,18 @@ const PlayerContextProvider: React.FC = ({ children }) => {
         currentEpisodeIndex,
         hasPrevious,
         hasNext,
+        isPlaying,
+        isLooping,
+        isShuffling,
         playEpisode,
         playNext,
         playPrevious,
-        isPlaying,
         tooglePlay,
+        toogleLoop,
+        toogleShuffle,
         setPlayingState,
-        playList
+        playList,
+        clearPlayerState
       }}
     >
       {children}
